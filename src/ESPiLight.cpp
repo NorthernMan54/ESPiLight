@@ -201,6 +201,18 @@ void ESPiLight::initReceiver(byte inputPin) {
   if (interrupt >= 0) {
     attachInterrupt((uint8_t)interrupt, interruptHandler, CHANGE);
   }
+  Debug("minrawlen: ");
+  DebugLn(ESPiLight::minrawlen);
+  Debug("maxrawlen: ");
+  DebugLn(ESPiLight::maxrawlen);
+  Debug("mingaplen: ");
+  DebugLn(ESPiLight::mingaplen);
+  Debug("maxgaplen: ");
+  DebugLn(ESPiLight::maxgaplen);
+  Debug("minpulselen: ");
+  DebugLn(ESPiLight::minpulselen);
+  Debug("maxpulselen: ");
+  DebugLn(ESPiLight::maxpulselen);
 }
 
 uint8_t ESPiLight::receivePulseTrain(uint16_t *pulses) {
@@ -305,6 +317,18 @@ ESPiLight::ESPiLight(int8_t outputPin) {
   }
 
   get_protocols();
+  Debug("minrawlen: ");
+  DebugLn(ESPiLight::minrawlen);
+  Debug("maxrawlen: ");
+  DebugLn(ESPiLight::maxrawlen);
+  Debug("mingaplen: ");
+  DebugLn(ESPiLight::mingaplen);
+  Debug("maxgaplen: ");
+  DebugLn(ESPiLight::maxgaplen);
+  Debug("minpulselen: ");
+  DebugLn(ESPiLight::minpulselen);
+  Debug("maxpulselen: ");
+  DebugLn(ESPiLight::maxpulselen);
 }
 
 void ESPiLight::setCallback(ESPiLightCallBack callback) {
