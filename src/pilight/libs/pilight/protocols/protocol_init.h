@@ -29,7 +29,7 @@ iwds07Init();
 keruiD026Init();
 logilinkSwitchInit();
 mumbiInit();
-nexusInit();
+// nexusInit();
 ninjablocksWeatherInit();
 pollinInit();
 quiggGT1000Init();

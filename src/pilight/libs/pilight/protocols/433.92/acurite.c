@@ -93,10 +93,13 @@ static struct settings_t *settings = NULL;
 
 static int validate(void)
 {
+#ifdef ACURITE_DEBUG
+    logprintfLn(LOG_DEBUG, "acurite acurite->rawlen %d", acurite->rawlen);
+#endif
     if (acurite->rawlen >= MIN_RAW_LENGTH && acurite->rawlen <= MAX_RAW_LENGTH)
     {
 #ifdef ACURITE_DEBUG
-        // logprintf(LOG_DEBUG, "acurite last index [%d] = %d", acurite->rawlen - 2, acurite->raw[acurite->rawlen - 2]);
+        logprintfLn(LOG_DEBUG, "acurite last index [%d] = %d", acurite->rawlen - 2, acurite->raw[acurite->rawlen - 2]);
 #endif
         int x = 0, messageTime = 0;
         for (x = 1; x < acurite->rawlen - 1; x += 2)
@@ -172,7 +175,7 @@ static void parseCode(void)
 #endif
 
     id = binToDec(binary, 8, 16);
-    battery = binary[25]? 1 : 0;
+    battery = binary[25] ? 1 : 0;
     unit = binary[24];
     id = id + (((float)unit) / 10);
 
@@ -218,7 +221,7 @@ static void parseCode(void)
     json_append_member(acurite->message, "temperature", json_mknumber(temperature, 1));
     json_append_member(acurite->message, "battery", json_mknumber(battery, 0));
 
-    acurite->repeats = 1;   // Kludge for the the signal repeating in the pulse train
+    acurite->repeats = 1; // Kludge for the the signal repeating in the pulse train
     acurite->old_content = json_encode(acurite->message);
 }
 

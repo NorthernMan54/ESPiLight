@@ -24,7 +24,7 @@
 #define ICACHE_RAM_ATTR IRAM_ATTR
 #endif
 
-#ifdef DEBUG
+#ifdef EDEBUG
 #define Debug(x) Serial.print(x)
 #define DebugLn(x) Serial.println(x)
 #else
@@ -171,6 +171,7 @@ static void calc_lengths() {
     }
     pnode = pnode->next;
   }
+  /*
   Debug("minrawlen: ");
   DebugLn(ESPiLight::minrawlen);
   Debug("maxrawlen: ");
@@ -183,6 +184,7 @@ static void calc_lengths() {
   DebugLn(ESPiLight::minpulselen);
   Debug("maxpulselen: ");
   DebugLn(ESPiLight::maxpulselen);
+  */
 }
 
 void ESPiLight::initReceiver(byte inputPin) {
@@ -201,6 +203,7 @@ void ESPiLight::initReceiver(byte inputPin) {
   if (interrupt >= 0) {
     attachInterrupt((uint8_t)interrupt, interruptHandler, CHANGE);
   }
+  /*
   Debug("minrawlen: ");
   DebugLn(ESPiLight::minrawlen);
   Debug("maxrawlen: ");
@@ -213,6 +216,7 @@ void ESPiLight::initReceiver(byte inputPin) {
   DebugLn(ESPiLight::minpulselen);
   Debug("maxpulselen: ");
   DebugLn(ESPiLight::maxpulselen);
+  */
 }
 
 uint8_t ESPiLight::receivePulseTrain(uint16_t *pulses) {
@@ -244,7 +248,7 @@ void ICACHE_RAM_ATTR ESPiLight::interruptHandler() {
   if (pulseTrain.length == 0) {
     const unsigned long now = micros();
     const unsigned int duration = now - _lastChange;
-
+    // Debug(duration); Debug(",");
     /* We first do some filtering (same as pilight BPF) */
     if (duration > minpulselen) {
       if (duration < maxpulselen) {
@@ -253,7 +257,7 @@ void ICACHE_RAM_ATTR ESPiLight::interruptHandler() {
         _nrpulses = (uint8_t)((_nrpulses + 1) % MAXPULSESTREAMLENGTH);
         /* Let's match footers */
         if (duration > mingaplen) {
-          // Debug('g');
+          // Debug(_nrpulses);Debug(",");
           /* Only match minimal length pulse streams */
           if (_nrpulses >= minrawlen && _nrpulses <= maxrawlen) {
             // Debug(_nrpulses);
